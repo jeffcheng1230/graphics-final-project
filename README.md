@@ -2,7 +2,7 @@
 
 This skeleton project will help you get started on your ThreeJS project and provide a strong foundation for extension. It sets up a simple scene, camera, and renderer in a modern JavaScript environment, and is written using some common best-practices that you may want to draw from.
 
-[Online Demo](https://reillybova.github.io/three-seed/)
+[Online Demo](https://adamfinkelstein.github.io/cos426finalproject/)
 
 ## Installation
 To build this project, you will need to use GitHub's NodeJS Package Manager (npm) to manage and install project dependencies. All npm settings, as well as your project dependencies and their versionings, are defined in the file `package.json`. We will unpack this file in the next section.
@@ -16,7 +16,7 @@ Before you start your project, look inside `package.json`. Take a note of the fo
 
 * `name`: This is your project name as it would appear on the npm registry (if published). You should replace this with your own project name, but make sure to preserve the all lowercase and hyphenated format.
 
-* `repository`: This holds the name of your repository for this project. It should match name of your GitHub repository as it appears in the URL. For instance, "https://github.com/ReillyBova/three-seed" would become "three-seed".
+* `repository`: This holds the name of your repository for this project. It should match name of your GitHub repository as it appears in the URL. For instance, "https://github.com/adamfinkelstein/cos426finalproject" would become "cos426finalproject".
 
 * `version`: This field is used to version your project. The standard format for these is "MAJOR.MINOR.PATCH". You can update this as needed (for instance, setting it to "1.0.0" when you are finished with the project), or you can choose to ignore it.
 
@@ -31,14 +31,14 @@ Before you start your project, look inside `package.json`. Take a note of the fo
 The dependencies below these fields tell npm what libraries (and more specifically, which versions of these libraries) to download when you run `npm install`. If there are further packages you would like to add to your project, you can install them by running `npm install <package-name>`.
 
 ## Launching a Local Webserver
-Now that your development environment is ready to go, you can spin up a local development webserver using `npm start`. This command will bundle the project code and start a development server at [http://localhost:8080/](http://localhost:8080/). Visit this in your web browser; every time you make changes to the code, *the page will automatically refresh!* If you did everything correctly, you should see something that looks like [this](https://reillybova.github.io/three-seed/) in your browser. Congratulations --- now you are ready to work!
+Now that your development environment is ready to go, you can spin up a local development webserver using `npm start`. This command will bundle the project code and start a development server at [http://localhost:8080/](http://localhost:8080/). Visit this in your web browser; every time you make changes to the code, *the page will automatically refresh!* If you did everything correctly, you should see something that looks like [this](https://adamfinkelstein.github.io/cos426finalproject/) in your browser. Congratulations --- now you are ready to work!
 
 ## Editing the Code
 The first file you should open is `./src/app.js`. This includes the setup for your ThreeJS scene, as well important global-level operations like the render loop. At the top of the file, you will see both modular imports for objects from the ThreeJS library dependency, and also modular imports from the local project directory.
 
 Next, navigate to `.src/components/scenes/SeedScene.js`. This file contains the definition for the class `SeedScene`, and the sets this class as the default export. The companion file `.src/components/scenes/index.js` then takes this default export and makes it visible as `SeedScene` to any files importing from the `scenes` folder. Note that if you want to add additional folders to the `.src/components` subdirectory, you will probably want to create additional `import` aliases (shortcuts) for these new folders in `webpack.config.js`.
 
-Returning our focus to `SeedScene.js`, first take a look at the constructor. The call `super()` invokes the parent constructor for the class, which is `Scene()` here. Then we add an instance variable called `state`, and populate it with some default settings. One of these initialization, `new Dat.GUI()`, will create a simple user interface that should already be familiar to you. You can [learn more about dat.GUI here](https://workshop.chromeexperiments.com/examples/gui/#1--Basic-Usage), or you can uninstall it from the project via `npm uninstall dat.gui`.
+Returning our focus to `SeedScene.js`, first take a look at the constructor. The call `super()` invokes the parent constructor for the class, which is `Scene()` here. Then we add an instance variable called `state`, and populate it with some default settings. One of these initialization, `new Dat.GUI()`, will create a simple user interface that should already be familiar to you. You can [learn more about dat.GUI here](https://github.com/dataarts/dat.gui/blob/master/API.md), or you can uninstall it from the project via `npm uninstall dat.gui`.
 
 The next primary line after `this.state = ...` is not creating a new instance variable, but is rather modifying the `background` instance variable that was initialized in the `Scene` constructor (invoked by `super()`). Setting this property will alter the current color of the scene's background. Try changing this property to `0xff0000`, and see what happens to your pretty scene in the browser!
 
@@ -68,7 +68,7 @@ Both models were downloaded from the Google Poly project:
 
 * [Flower](https://poly.google.com/view/eydI4__jXpi)
 
-This skeleton project was adapted from edwinwebb's ThreeJS [seed project](https://github.com/edwinwebb/three-seed) by Reilly Bova (Princeton ’20), and published [here on github](https://github.com/ReillyBova/three-seed). It was later slightly updated and setup as a github template by Adam Finkelstein and Joseph Lou.
+This skeleton project was adapted from edwinwebb's ThreeJS [seed project](https://github.com/edwinwebb/three-seed) by Reilly Bova (Princeton ’20), and published [here on github](https://github.com/ReillyBova/three-seed). It was later slightly updated and setup as a github template by Adam Finkelstein and Joseph Lou, and is hosted [here on github](https://github.com/adamfinkelstein/cos426finalproject).
 
 ## License
 [MIT](./LICENSE)
