@@ -11,6 +11,8 @@ The NodeJS Package Manager, which is the world's largest software registry and s
 
 Before you begin, you will need to install [NodeJS and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Then, open a new terminal instance, set your working directory to the root of the project, and run `npm install`.
 
+**Note on node versions:** The current version of this scaffolding code is known to work with older versions of node such including `v14.17.0` and `v16.20.2`, but may be broken with newer versions (like 18.3.0 and beyond). Therefore recommend starting from one of the known stable versions. It is easy to switch among different versions of node on your computer by installing [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm).
+
 ## Setting Up Your Project
 Before you start your project, look inside `package.json`. Take a note of the following fields, and adjust them where appropriate:
 
