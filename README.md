@@ -1,15 +1,19 @@
-# COS 426 Final Project Seed
+# COS 426 Final Project Template
+This skeleton project will help you get started with a ThreeJS project and provide a strong foundation for extension. It sets up a simple scene, camera, and renderer in a modern JavaScript environment, and is written using some common best-practices that you may want to draw from.
 
-This skeleton project will help you get started on your ThreeJS project and provide a strong foundation for extension. It sets up a simple scene, camera, and renderer in a modern JavaScript environment, and is written using some common best-practices that you may want to draw from.
+To see it running live on the web, check out the [Online Demo](https://adamfinkelstein.github.io/cos426finalproject/)
 
-[Online Demo](https://adamfinkelstein.github.io/cos426finalproject/)
+## Cloning this template at Github
+To make your own copy of this project at Github, sign into your Github account, navigate to this project [at Github] and then click the big green button at the top: "Use this template" > "Create a new repository". 
 
-## Installation
-To build this project, you will need to use GitHub's NodeJS Package Manager (npm) to manage and install project dependencies. All npm settings, as well as your project dependencies and their versionings, are defined in the file `package.json`. We will unpack this file in the next section.
+## Installation on your own computer
+Having made your own copy of the project at Github (previous step) you can clone your repository to your own computer. 
 
-The NodeJS Package Manager, which is the world's largest software registry and supports over one million open source JavaScript packages and libraries, runs in a NodeJS runtime. The NodeJS runtime is essentially a port of Google Chrome's JavaScript V8 engine that will run directly in your terminal (instead of within a browser).
+To build this project, you will need to use Node Package Manager (npm) to manage and install project dependencies. All npm settings, as well as your project dependencies and their versionings, are defined in the file `package.json`. We will unpack this file in the next section.
 
-Before you begin, you will need to install [NodeJS and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Then, open a new terminal instance, set your working directory to the root of the project, and run `npm install`.
+Node Package Manager, which is the world's largest software registry and supports over one million open source JavaScript packages and libraries, runs in a NodeJS runtime. The NodeJS runtime is essentially a port of Google Chrome's JavaScript V8 engine that will run directly in your terminal (instead of within a browser).
+
+Before you begin, you will need to install [Node and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Then, open a new terminal instance, set your working directory to the root of the project, and run `npm install`.
 
 **Note on node versions:** The current version of this scaffolding code is known to work with older versions of node such including `v14.17.0` and `v16.20.2`, but may be broken with newer versions (like 18.3.0 and beyond). Therefore recommend starting from one of the known stable versions. It is easy to switch among different versions of node on your computer by installing [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm).
 
