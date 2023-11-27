@@ -4,7 +4,7 @@ This skeleton project will help you get started with a ThreeJS project and provi
 To see it running live on the web, check out the [Online Demo](https://adamfinkelstein.github.io/cos426finalproject/)
 
 ## Cloning this template at Github
-To make your own copy of this project at Github, sign into your Github account, navigate to this project [at Github]([https://github.com/adamfinkelstein/cos426finalproject](https://github.com/adamfinkelstein/cos426finalproject/tree/main/) and then click the big green button at the top: "Use this template" > "Create a new repository". 
+To make your own copy of this project at Github, sign into your Github account, navigate to this project [at Github](https://github.com/adamfinkelstein/cos426finalproject/tree/main) and then click the big green button at the top: "Use this template" > "Create a new repository". 
 
 ## Installation on your own computer
 Having made your own copy of the project at Github (previous step) you can clone your repository to your own computer. 
