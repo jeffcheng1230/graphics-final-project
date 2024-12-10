@@ -1,28 +1,41 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color } from 'three';
-import { Flower, Land } from 'objects';
+import { Scene, Color, TextureLoader } from 'three';
+import { Flower, Land, Person } from 'objects';
 import { BasicLights } from 'lights';
 
+import IMG from '/public/friend_outside.jpg';
+
 class SeedScene extends Scene {
-    constructor() {
+    constructor(world) {
         // Call parent Scene() constructor
         super();
 
         // Init state
         this.state = {
             gui: new Dat.GUI(), // Create GUI for scene
-            rotationSpeed: 1,
+            rotationSpeed: 0,
             updateList: [],
         };
 
-        // Set background to a nice color
-        this.background = new Color(0x7ec0ee);
+        // ===========================================
+
+        const loader = new TextureLoader();
+        loader.load(IMG, (texture) => {
+            this.background = texture; // Set the texture as the background
+        }, undefined, (error) => {
+            console.error('Error loading texture:', error);
+            this.background = new Color(0x7ec0ee);
+        });
+
+        // ===========================================
 
         // Add meshes to scene
+        const person = new Person(this, world);
         const land = new Land();
         const flower = new Flower(this);
         const lights = new BasicLights();
-        this.add(land, flower, lights);
+        // this.add(person, land, flower, lights);
+        this.add(person, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);

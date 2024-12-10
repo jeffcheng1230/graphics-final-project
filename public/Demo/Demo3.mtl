@@ -1,0 +1,4 @@
+newmtl Stripes
+Kd 1.000 1.000 1.000
+d 1.000
+map_Kd /public/Demo/Concrete_007_Color&opacityTexture.jpg
