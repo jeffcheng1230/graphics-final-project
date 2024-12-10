@@ -15,6 +15,7 @@ class SeedScene extends Scene {
             gui: new Dat.GUI(), // Create GUI for scene
             rotationSpeed: 0,
             updateList: [],
+            person: null,
         };
 
         // ===========================================
@@ -36,6 +37,7 @@ class SeedScene extends Scene {
         const lights = new BasicLights();
         // this.add(person, land, flower, lights);
         this.add(person, lights);
+        this.state.person = person;
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
