@@ -1,7 +1,0 @@
-newmtl Subsurface Textured
-Kd 1.000 1.000 1.000
-d 1.000
-newmtl Concrete 1
-Kd 1.000 1.000 1.000
-d 1.000
-map_Kd Concrete_007_Color.jpg
