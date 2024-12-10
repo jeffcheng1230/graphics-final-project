@@ -6,7 +6,7 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3, PlaneGeometry, MeshBasicMaterial, Mesh, DoubleSide } from 'three'
+import { WebGLRenderer, PerspectiveCamera, Vector3, PlaneGeometry, MeshBasicMaterial, Mesh, DoubleSide } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 
