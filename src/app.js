@@ -10,15 +10,19 @@ import { WebGLRenderer, PerspectiveCamera, Vector3, PlaneGeometry, MeshBasicMate
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 
-import { World, Body, Plane, Vec3, Quaternion } from 'cannon-es';
+import { World, Body, Plane, Material } from 'cannon-es';
 
 // =========================================
 
 const world = new World();
 world.gravity.set(0, -9.82, 0);
+const frictionlessMaterial = new Material("frictionless");
+frictionlessMaterial.friction = 0;
+frictionlessMaterial.restitution = 0;
 const ground = new Body({
   mass: 0, // mass = 0 makes it static
   shape: new Plane(),
+  material: frictionlessMaterial
 });
 ground.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // Match the Three.js plane rotation
 world.addBody(ground);
@@ -41,7 +45,7 @@ scene.add(plane);
 // ====
 
 // Set up camera
-camera.position.set(-30, 0, 0);
+camera.position.set(-30, 2, 0);
 camera.lookAt(new Vector3(0, 50, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -69,7 +73,7 @@ const onAnimationFrameHandler = (timeStamp) => {
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
-const UP = 1, DOWN = 2, RIGHT = 3, LEFT = 4, NONE = 0;
+const UP = 1, RIGHT = 2, LEFT = 3, NONE = 0;
 let keyPressed = NONE;
 function handleImpactEvents(event) {
   if (event.target.tagName === "INPUT") {
@@ -77,16 +81,13 @@ function handleImpactEvents(event) {
   }
 
   if (event.key == "ArrowUp") {
-    scene.state.person.keyPress = UP;
-  }
-  else if (event.key == "ArrowDown") {
-    scene.state.person.keyPress = DOWN;
+    scene.state.person.up = true;
   }
   else if (event.key == "ArrowLeft") {
-    scene.state.person.keyPress = LEFT;
+    scene.state.person.left = true;
   }
   else if (event.key == "ArrowRight") {
-    scene.state.person.keyPress = RIGHT;
+    scene.state.person.right = true;
   }
   
   // if (scene.state.person.cubeBody != null) {
@@ -114,8 +115,24 @@ function handleImpactEvents(event) {
   //   }
   // }
 }
+
+function handleReleaseEvents(event) {
+  if (event.target.tagName === "INPUT") {
+    return;
+  }
+
+  if (event.key == "ArrowUp") {
+    scene.state.person.up = false;
+  }
+  else if (event.key == "ArrowLeft") {
+    scene.state.person.left = false;
+  }
+  else if (event.key == "ArrowRight") {
+    scene.state.person.right = false;
+  }
+}
 window.addEventListener("keydown", (e) => handleImpactEvents(e), false);
-window.addEventListener("keyup", (e) => { scene.state.person.keyPress = NONE; }, false);
+window.addEventListener("keyup", (e) => handleReleaseEvents(e), false);
 
 // Resize Handler
 const windowResizeHandler = () => {

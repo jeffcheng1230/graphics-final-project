@@ -56,6 +56,7 @@ class Person extends Group {
 			this.mixer = new AnimationMixer(model);
 
 			// Custom animation from Mixamo
+			// Walking animation
 			const fbxLoader = new FBXLoader();
 			fbxLoader.load('./Walking.fbx', (animationObject) => {
 				const animationClip = animationObject.animations[0]; // Assuming the animation file has one clip
@@ -63,6 +64,7 @@ class Person extends Group {
 				this.walk = action;
 			});
 
+			// Jumping animation
 			fbxLoader.load('./Jumping.fbx', (animationObject) => {
 				const animationClip = animationObject.animations[0]; // Assuming the animation file has one clip
 				const action = this.mixer.clipAction(animationClip);
@@ -77,23 +79,31 @@ class Person extends Group {
 		});
 
 		// Three JS visual box
-		const geometry = new BoxGeometry(1, 1, 1); // Width, Height, Depth
+		const geometry = new BoxGeometry(2, 1, 2); // Width, Height, Depth
 		const material = new MeshBasicMaterial({ color: 0x00ff00 }); // Green color
 		const box = new Mesh(geometry, material);
 		this.add(box);
 		this.box = box;
 
 		// Cannon JS physics box
-		const cubeShape = new Box(new Vec3(0.5, 0.5, 0.5)); // Half-extents
+		// const cubeShape = new Box(new Vec3(0.5, 0.5, 0.5)); // Half-extents
+		const cubeShape = new Box(new Vec3(1, 0.5, 1));
 		// const angle = Math.PI;
 		// const quaternion = new Quaternion(-1.0, 0.0, 0.0, angle); // quaternion (x, y, z, a) rotates the figure about the vector (x, y, z) by angle a
+		this.frictionlessMaterial = new Material("frictionless");
+		this.frictionlessMaterial.friction = 0;
+		this.frictionlessMaterial.restitution = 0;
 		const cubeBody = new Body({
-				mass: 1,
-				position: new Vec3(0, 2, 0),
-				shape: cubeShape,
-				// quaternion: quaternion
+			mass: 100000,
+			position: new Vec3(0, 2, 0),
+			shape: cubeShape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+			// quaternion: quaternion
 		});
-		const axis = new Vec3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
+		this.defaultMaterial = new Material("inelastic");
+		this.defaultMaterial.restitution = 0;
+		const axis = new Vec3(0, -1, 0); // Axis of rotation (e.g., y-axis)
 		const angle = Math.PI / 2;
 		cubeBody.quaternion.setFromAxisAngle(axis, angle);
 
@@ -107,8 +117,6 @@ class Person extends Group {
 		this.keyPress = 0;
 
 		parent.addToUpdateList(this);
-
-		console.log(this.cubeBody);
 	}
 
 	update(timeStamp) {
@@ -132,7 +140,7 @@ class Person extends Group {
 		// lock person model to cube with physics
 		if (this.model != null) {
 			this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -0.4, 0.0)));
-			this.model.quaternion.copy(this.cubeBody.quaternion);
+			// this.model.quaternion.copy(this.cubeBody.quaternion);
 		}
 		// lock visual box to cube with physics
 		if (this.box != null) {
@@ -140,55 +148,124 @@ class Person extends Group {
 			this.box.quaternion.copy(this.cubeBody.quaternion);
 		}
 
-		const UP = 1, DOWN = 2, RIGHT = 3, LEFT = 4, NONE = 0;
-		if (this.keyPress != null && this.cubeBody != null) {
-			if (this.keyPress == UP && this.jump != null && !this.jump.isRunning()) {
-				const axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
-				const angle = Math.PI / 2;
-				this.cubeBody.quaternion.setFromAxisAngle(axis, angle);
+		const NONE = 0, UP = 1, RIGHT = 2, LEFT = 3;
+		if (this.keyPress != null && this.cubeBody != null && this.walk != null && this.jump != null) {		
 
-				this.cubeBody.position.y += 3;
+			// Examples
+			// this.jump.play();
+			// this.walk.play();
+
+			// let axis = new Vector3(1, 0, 0);
+			// let angle = -Math.PI / 2;
+			// let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
+			// quaternion1.setFromAxisAngle(axis, angle);
+			// this.model.quaternion.copy(quaternion1);
+
+			// axis = new Vector3(0, 0, -1);
+			// angle = -Math.PI;
+			// let quaternion2 = new Quaternion(0, 0, 0, Math.PI);
+			// quaternion2.setFromAxisAngle(axis, angle);
+			// quaternion1.multiply(quaternion2);
+			// this.model.quaternion.copy(quaternion1);
+
+			// Still, forward
+			let axis = new Vector3(0, 1, 0);
+			let angle = -Math.PI / 2;
+			let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
+			quaternion1.setFromAxisAngle(axis, angle);
+			this.model.quaternion.copy(quaternion1);
+
+			if (this.up) {
+
 				this.jump.play();
-			}
-			else if (this.keyPress == RIGHT) {
-				const axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
-				const angle = Math.PI / 2;
-				this.cubeBody.quaternion.setFromAxisAngle(axis, angle);
-				this.cubeBody.position.z += 0.1;
 
-				this.jump.stop();
-				this.walk.play();
+				// this.model.quaternion.copy(this.model.quaternion.multiply())
+
+				// let axis = new Vector3(0, 1, 0); // Axis of rotation (e.g., y-axis)
+				// let angle = Math.PI;
+				// let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
+				// quaternion1.setFromAxisAngle(axis, angle);
+
+				// axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
+				// angle = Math.PI / 2;
+				// let quaternion2 = new Quaternion(0, 0, 0, 0);
+				// quaternion2.setFromAxisAngle(axis, angle);
+				
+				// quaternion1.multiply(quaternion2);
+				// this.model.quaternion.copy(quaternion1);
+
+				// this.jump.play();
+
+			}
+			
+			if (this.keyPress == RIGHT) {
+				// this.cubeBody.material = this.frictionlessMaterial;
+
+				// if (this.cubeBody.position.y < 0.6) {
+				// 	const axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
+				// 	const angle = Math.PI / 2;
+				// 	this.model.quaternion.setFromAxisAngle(axis, angle);
+				// 	this.cubeBody.velocity.z = 10;
+
+				// 	this.jump.stop();
+				// 	this.jumping = false;
+
+				// 	this.walk.play();
+				// }
 			}
 			else if (this.keyPress == LEFT) {
-				let axis = new Vector3(0, 1, 0); // Axis of rotation (e.g., y-axis)
-				let angle = Math.PI;
-				let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
-				quaternion1.setFromAxisAngle(axis, angle);
+				// this.cubeBody.material = this.frictionlessMaterial;
 
-				axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
-				angle = Math.PI / 2;
-				let quaternion2 = new Quaternion(0, 0, 0, 0);
-				quaternion2.setFromAxisAngle(axis, angle);
-				
-				quaternion1.multiply(quaternion2);
-				this.cubeBody.quaternion.copy(quaternion1);
-				this.cubeBody.position.z -= 0.1;
+				// if (this.cubeBody.position.y < 0.6) {
+				// 	let axis = new Vector3(0, 1, 0); // Axis of rotation (e.g., y-axis)
+				// 	let angle = Math.PI;
+				// 	let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
+				// 	quaternion1.setFromAxisAngle(axis, angle);
 
-				this.jump.stop();
-				this.walk.play();
+				// 	axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
+				// 	angle = Math.PI / 2;
+				// 	let quaternion2 = new Quaternion(0, 0, 0, 0);
+				// 	quaternion2.setFromAxisAngle(axis, angle);
+					
+				// 	quaternion1.multiply(quaternion2);
+				// 	this.model.quaternion.copy(quaternion1);
+				// 	this.cubeBody.velocity.z = -10;
+
+				// 	this.jump.stop();
+				// 	this.jumping = false;
+
+				// 	this.walk.play();
+				// }
 			}
-			else if (this.keyPress == NONE && this.walk != null&& this.jump != null) {
-				this.walk.stop();
-				if (this.jump.getClip().duration - this.jump.time < 0.02) {
-					this.jump.stop();
-				}
+			else if (this.keyPress == NONE) {
+				// this.cubeBody.material = this.defaultMaterial;
+
+				// this.walk.stop();
+				// if (this.jump.getClip().duration - this.jump.time < 0.02) {
+				// 	this.jump.stop();
+				// 	this.jumping = false;
+				// }
 				
-				if (this.jump != null && !this.jump.isRunning()) {
-					let axis = new Vector3(0, -1, 0); // Axis of rotation (e.g., y-axis)
-					let angle = Math.PI / 2;
-					this.cubeBody.quaternion.setFromAxisAngle(axis, angle);
-				}
+				// if (!this.walk.isRunning()) {
+				// 	let axis = new Vector3(0, -1, 0); // Axis of rotation (e.g., y-axis)
+				// 	let angle = Math.PI / 2;
+				// 	this.model.quaternion.setFromAxisAngle(axis, angle);
+
+				// 	if (this.jump.isRunning()) {
+				// 		let axis = new Vector3(0, 0, -1); // Axis of rotation (e.g., y-axis)
+				// 		let angle = Math.PI / 2;
+				// 		let quaternion = new Quaternion(0, 0, 0, 0);
+				// 		quaternion.setFromAxisAngle(axis, angle);
+				// 		this.model.quaternion.multiply(quaternion);
+				// 	}
+				// }
 			}
+			
+			// const EPS = 0.001;
+			// if (!this.jumping && this.jump.time / this.jump.getClip().duration >= 0.25 + EPS) {
+			// 	this.cubeBody.applyForce(new Vec3(0.0, 50000000.0, 0.0), new Vec3(0.0, 0.0, 0.0));
+			// 	this.jumping = true;
+			// }
 		}
 	}
 }
