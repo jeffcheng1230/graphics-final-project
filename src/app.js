@@ -73,47 +73,20 @@ const onAnimationFrameHandler = (timeStamp) => {
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
-const UP = 1, RIGHT = 2, LEFT = 3, NONE = 0;
-let keyPressed = NONE;
 function handleImpactEvents(event) {
   if (event.target.tagName === "INPUT") {
     return;
   }
 
   if (event.key == "ArrowUp") {
-    scene.state.person.up = true;
+    scene.state.person.upArrow = true;
   }
   else if (event.key == "ArrowLeft") {
-    scene.state.person.left = true;
+    scene.state.person.leftArrow = true;
   }
   else if (event.key == "ArrowRight") {
-    scene.state.person.right = true;
+    scene.state.person.rightArrow = true;
   }
-  
-  // if (scene.state.person.cubeBody != null) {
-  //   const cubeBody = scene.state.person.cubeBody;
-  //   if (event.key == "ArrowUp") {
-  //     cubeBody.position.y += 3;
-  //   }
-  //   else if (event.key == "ArrowRight") {
-  //     const axis = new Vec3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
-  //     const angle = Math.PI / 2;
-  //     cubeBody.quaternion.setFromAxisAngle(axis, angle);
-  //     cubeBody.position.z += 0.1;
-  //   }
-  //   else if (event.key == "ArrowLeft") {
-  //     let axis = new Vec3(0, 1, 0); // Axis of rotation (e.g., y-axis)
-  //     let angle = Math.PI;
-  //     let quaternion1 = new Quaternion(0, 0, 0, 0);
-  //     quaternion1.setFromAxisAngle(axis, angle);
-  //     axis = new Vec3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
-  //     angle = Math.PI / 2;
-  //     let quaternion2 = new Quaternion(0, 0, 0, 0);
-  //     quaternion2.setFromAxisAngle(axis, angle);
-  //     cubeBody.quaternion = quaternion1.mult(quaternion2);
-  //     cubeBody.position.z -= 0.1;
-  //   }
-  // }
 }
 
 function handleReleaseEvents(event) {
@@ -122,15 +95,16 @@ function handleReleaseEvents(event) {
   }
 
   if (event.key == "ArrowUp") {
-    scene.state.person.up = false;
+    scene.state.person.upArrow = false;
   }
   else if (event.key == "ArrowLeft") {
-    scene.state.person.left = false;
+    scene.state.person.leftArrow = false;
   }
   else if (event.key == "ArrowRight") {
-    scene.state.person.right = false;
+    scene.state.person.rightArrow = false;
   }
 }
+
 window.addEventListener("keydown", (e) => handleImpactEvents(e), false);
 window.addEventListener("keyup", (e) => handleReleaseEvents(e), false);
 

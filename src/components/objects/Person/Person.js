@@ -32,8 +32,8 @@ class Person extends Group {
 			model.position.x = 0;
 			model.position.y = 0;
 			model.position.z = 0;
-			// const angle = Math.PI;
-			// const quaternion = new Quaternion(-1.0, 0.0, 0.0, angle); // quaternion (x, y, z, a) rotates the figure about the vector (x, y, z) by angle a
+			// quaternion (x, y, z, a) rotates the figure about the vector (x, y, z) by angle a
+			// const quaternion = new Quaternion(-1.0, 0.0, 0.0, Math.PI);
 			// model.quaternion.copy(quaternion);
 
 			// Load texture
@@ -71,11 +71,6 @@ class Person extends Group {
 				this.jump = action;
 			});
 
-			// Built-in animation
-			// let fileAnimations = gltf.animations;
-			// let idleAnim = AnimationClip.findByName(fileAnimations, 'jump');
-			// const idle = this.mixer.clipAction(idleAnim);
-			// idle.play();
 		});
 
 		// Three JS visual box
@@ -86,13 +81,7 @@ class Person extends Group {
 		this.box = box;
 
 		// Cannon JS physics box
-		// const cubeShape = new Box(new Vec3(0.5, 0.5, 0.5)); // Half-extents
-		const cubeShape = new Box(new Vec3(1, 0.5, 1));
-		// const angle = Math.PI;
-		// const quaternion = new Quaternion(-1.0, 0.0, 0.0, angle); // quaternion (x, y, z, a) rotates the figure about the vector (x, y, z) by angle a
-		this.frictionlessMaterial = new Material("frictionless");
-		this.frictionlessMaterial.friction = 0;
-		this.frictionlessMaterial.restitution = 0;
+		const cubeShape = new Box(new Vec3(1, 0.5, 1));	// Half-extents
 		const cubeBody = new Body({
 			mass: 100000,
 			position: new Vec3(0, 2, 0),
@@ -101,11 +90,7 @@ class Person extends Group {
 			material: this.frictionlessMaterial
 			// quaternion: quaternion
 		});
-		this.defaultMaterial = new Material("inelastic");
-		this.defaultMaterial.restitution = 0;
-		const axis = new Vec3(0, -1, 0); // Axis of rotation (e.g., y-axis)
-		const angle = Math.PI / 2;
-		cubeBody.quaternion.setFromAxisAngle(axis, angle);
+		cubeBody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
 
 		world.addBody(cubeBody);
 		this.cubeBody = cubeBody;
@@ -132,11 +117,6 @@ class Person extends Group {
 		}
 		this.world.step(1 / 60, this.clock.getDelta(), 3);
 
-		// have person move forward
-		if (this.cubeBody != null) {
-			// this.cubeBody.position.z += 0.1;
-		}
-
 		// lock person model to cube with physics
 		if (this.model != null) {
 			this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -0.4, 0.0)));
@@ -151,121 +131,71 @@ class Person extends Group {
 		const NONE = 0, UP = 1, RIGHT = 2, LEFT = 3;
 		if (this.keyPress != null && this.cubeBody != null && this.walk != null && this.jump != null) {		
 
-			// Examples
-			// this.jump.play();
-			// this.walk.play();
-
-			// let axis = new Vector3(1, 0, 0);
-			// let angle = -Math.PI / 2;
-			// let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
-			// quaternion1.setFromAxisAngle(axis, angle);
-			// this.model.quaternion.copy(quaternion1);
-
-			// axis = new Vector3(0, 0, -1);
-			// angle = -Math.PI;
-			// let quaternion2 = new Quaternion(0, 0, 0, Math.PI);
-			// quaternion2.setFromAxisAngle(axis, angle);
-			// quaternion1.multiply(quaternion2);
-			// this.model.quaternion.copy(quaternion1);
-
 			// Still, forward
-			let axis = new Vector3(0, 1, 0);
-			let angle = -Math.PI / 2;
 			let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
-			quaternion1.setFromAxisAngle(axis, angle);
+			quaternion1.setFromAxisAngle(new Vector3(0, 1, 0), -Math.PI / 2);
 			this.model.quaternion.copy(quaternion1);
 
-			if (this.up) {
-
+			if (this.upArrow) {
 				this.jump.play();
-
-				// this.model.quaternion.copy(this.model.quaternion.multiply())
-
-				// let axis = new Vector3(0, 1, 0); // Axis of rotation (e.g., y-axis)
-				// let angle = Math.PI;
-				// let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
-				// quaternion1.setFromAxisAngle(axis, angle);
-
-				// axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
-				// angle = Math.PI / 2;
-				// let quaternion2 = new Quaternion(0, 0, 0, 0);
-				// quaternion2.setFromAxisAngle(axis, angle);
-				
-				// quaternion1.multiply(quaternion2);
-				// this.model.quaternion.copy(quaternion1);
-
-				// this.jump.play();
-
 			}
 			
-			if (this.keyPress == RIGHT) {
-				// this.cubeBody.material = this.frictionlessMaterial;
+			if (this.rightArrow) {
+				this.walk.play();
 
-				// if (this.cubeBody.position.y < 0.6) {
-				// 	const axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
-				// 	const angle = Math.PI / 2;
-				// 	this.model.quaternion.setFromAxisAngle(axis, angle);
-				// 	this.cubeBody.velocity.z = 10;
+				// Jump and/or walk, right
+				let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
+				quaternion1.setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2);
+				this.model.quaternion.copy(quaternion1);
 
-				// 	this.jump.stop();
-				// 	this.jumping = false;
-
-				// 	this.walk.play();
-				// }
+				this.cubeBody.velocity.z = 10;
 			}
-			else if (this.keyPress == LEFT) {
-				// this.cubeBody.material = this.frictionlessMaterial;
-
-				// if (this.cubeBody.position.y < 0.6) {
-				// 	let axis = new Vector3(0, 1, 0); // Axis of rotation (e.g., y-axis)
-				// 	let angle = Math.PI;
-				// 	let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
-				// 	quaternion1.setFromAxisAngle(axis, angle);
-
-				// 	axis = new Vector3(-1, 0, 0); // Axis of rotation (e.g., y-axis)
-				// 	angle = Math.PI / 2;
-				// 	let quaternion2 = new Quaternion(0, 0, 0, 0);
-				// 	quaternion2.setFromAxisAngle(axis, angle);
-					
-				// 	quaternion1.multiply(quaternion2);
-				// 	this.model.quaternion.copy(quaternion1);
-				// 	this.cubeBody.velocity.z = -10;
-
-				// 	this.jump.stop();
-				// 	this.jumping = false;
-
-				// 	this.walk.play();
-				// }
+			else if (!this.leftArrow) {
+				this.walk.stop();
+				this.cubeBody.velocity.z = 0;
 			}
-			else if (this.keyPress == NONE) {
-				// this.cubeBody.material = this.defaultMaterial;
 
-				// this.walk.stop();
-				// if (this.jump.getClip().duration - this.jump.time < 0.02) {
-				// 	this.jump.stop();
-				// 	this.jumping = false;
-				// }
-				
-				// if (!this.walk.isRunning()) {
-				// 	let axis = new Vector3(0, -1, 0); // Axis of rotation (e.g., y-axis)
-				// 	let angle = Math.PI / 2;
-				// 	this.model.quaternion.setFromAxisAngle(axis, angle);
+			if (this.leftArrow) {
+				this.walk.play();
 
-				// 	if (this.jump.isRunning()) {
-				// 		let axis = new Vector3(0, 0, -1); // Axis of rotation (e.g., y-axis)
-				// 		let angle = Math.PI / 2;
-				// 		let quaternion = new Quaternion(0, 0, 0, 0);
-				// 		quaternion.setFromAxisAngle(axis, angle);
-				// 		this.model.quaternion.multiply(quaternion);
-				// 	}
-				// }
+				// Jump and/or walk, left
+				let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
+				quaternion1.setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2);
+				let quaternion2 = new Quaternion(0, 0, 0, Math.PI);
+				quaternion2.setFromAxisAngle(new Vector3(0, 0, -1), -Math.PI);
+				quaternion1.multiply(quaternion2);
+				this.model.quaternion.copy(quaternion1);
+
+				this.cubeBody.velocity.z = -10;
 			}
-			
-			// const EPS = 0.001;
-			// if (!this.jumping && this.jump.time / this.jump.getClip().duration >= 0.25 + EPS) {
-			// 	this.cubeBody.applyForce(new Vec3(0.0, 50000000.0, 0.0), new Vec3(0.0, 0.0, 0.0));
-			// 	this.jumping = true;
-			// }
+			else if (!this.rightArrow) {
+				this.walk.stop();
+				this.cubeBody.velocity.z = 0;
+			}
+
+			// Jump, forward
+			if (this.jump.isRunning() && !this.walk.isRunning() && !this.rightArrow && !this.leftArrow) {
+				if (!this.rightArrow && !this.leftArrow) {
+					let quaternion1 = new Quaternion(0, 1, 0, Math.PI);
+					quaternion1.setFromAxisAngle(new Vector3(0, 1, 0), -Math.PI / 2);
+					let quaternion2 = new Quaternion(0, 0, 0, Math.PI);
+					quaternion2.setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2);
+					quaternion1.multiply(quaternion2);
+					this.model.quaternion.copy(quaternion1);
+				}
+			}
+
+			// Jump force
+			if (!this.jumping && this.jump.time / this.jump.getClip().duration >= 0.25) {
+				this.cubeBody.applyForce(new Vec3(0.0, 50000000.0, 0.0), new Vec3(0.0, 0.0, 0.0));
+				this.jumping = true;
+			}
+
+			// Stop jump animation once Person hits the ground
+			if (this.jump.time / this.jump.getClip().duration >= 0.98) {
+				this.jump.stop();
+				this.jumping = false;
+			}	
 		}
 	}
 }
