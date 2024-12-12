@@ -1,0 +1,1 @@
+export { default as Person2 } from './Person2.js';

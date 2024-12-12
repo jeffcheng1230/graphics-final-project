@@ -78,14 +78,26 @@ function handleImpactEvents(event) {
     return;
   }
 
+  // Person 1
   if (event.key == "ArrowUp") {
-    scene.state.person.upArrow = true;
+    scene.state.person1.upArrow = true;
   }
   else if (event.key == "ArrowLeft") {
-    scene.state.person.leftArrow = true;
+    scene.state.person1.leftArrow = true;
   }
   else if (event.key == "ArrowRight") {
-    scene.state.person.rightArrow = true;
+    scene.state.person1.rightArrow = true;
+  }
+
+  // Person 2
+  if (event.key == "w") {
+    scene.state.person2.wKey = true;
+  }
+  else if (event.key == "a") {
+    scene.state.person2.aKey = true;
+  }
+  else if (event.key == "d") {
+    scene.state.person2.dKey = true;
   }
 }
 
@@ -94,14 +106,26 @@ function handleReleaseEvents(event) {
     return;
   }
 
+  // Person 1
   if (event.key == "ArrowUp") {
-    scene.state.person.upArrow = false;
+    scene.state.person1.upArrow = false;
   }
   else if (event.key == "ArrowLeft") {
-    scene.state.person.leftArrow = false;
+    scene.state.person1.leftArrow = false;
   }
   else if (event.key == "ArrowRight") {
-    scene.state.person.rightArrow = false;
+    scene.state.person1.rightArrow = false;
+  }
+
+  // Person 2
+  if (event.key == "w") {
+    scene.state.person2.wKey = false;
+  }
+  else if (event.key == "a") {
+    scene.state.person2.aKey = false;
+  }
+  else if (event.key == "d") {
+    scene.state.person2.dKey = false;
   }
 }
 
