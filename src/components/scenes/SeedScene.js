@@ -5,6 +5,7 @@ import { BasicLights } from 'lights';
 
 import IMG from '/public/friend_outside.jpg';
 import { Vec3, World } from 'cannon-es';
+import { Vector3 } from 'three'
 
 class SeedScene extends Scene {
     constructor(world) {
@@ -35,7 +36,6 @@ class SeedScene extends Scene {
         // Add meshes to scene
 		this.doors = [[new Vec3(-0.5, 0.0, 13), new Vec3(0.5, 5.0, 17)],
 		            [new Vec3(-0.5, 0.0, -17), new Vec3(0.5, 5.0, -13)]];
-
         let doors1Pos = this.doors[0][0];
         doors1Pos.x += 0.5;
         doors1Pos.z += 2;
@@ -47,8 +47,21 @@ class SeedScene extends Scene {
 
         const box = new SteppingBox(this, world, new Vec3(0.0, 5.0, -10.0));
 
-        const platform = new Platform(this, world);
-        this.platform = platform;
+		this.buttons = [[new Vec3(-2.0, -2.0, -8.0), new Vec3(2.0, 10.0, -5.0)],
+                        [new Vec3(-2.0, -2.0, -13.0), new Vec3(2.0, 10.0, -10.0)]];
+        this.platforms = []
+        let buttonPos = this.buttons[0][0].clone();
+        buttonPos.x += 2;
+        buttonPos.y += 5;
+        buttonPos.z += 1.5;
+        const platform1 = new Platform(new Vec3(0, -17.5, 31), buttonPos, this, world);
+        this.platforms.push(platform1);
+        buttonPos = this.buttons[1][0].clone();
+        buttonPos.x += 2;
+        buttonPos.y += 5;
+        buttonPos.z += 1.5;
+        const platform2 = new Platform(new Vec3(0, -6.0, -30.2), buttonPos, this, world);
+        this.platforms.push(platform2);
 
         const iceCream = new IceCream(this);
         iceCream.position.copy(new Vec3(0.0, 5.0, -3.0));
@@ -57,7 +70,7 @@ class SeedScene extends Scene {
         const env = new Environment(this, world);
 
         const person1 = new Person1(this, world);
-        person1.cubeBody.position.copy(new Vec3(0.0, 10.0, 5.0));
+        person1.cubeBody.position.copy(new Vec3(0, -15, -32));
         this.person1 = person1;
         const person2 = new Person2(this, world);
         person2.cubeBody.position.copy(new Vec3(0.0, 10.0, -5.0));
@@ -67,12 +80,12 @@ class SeedScene extends Scene {
         const flower = new Flower(this);
         const lights = new BasicLights();
         // this.add(person, land, flower, lights);
-        this.add(door1, door2, box, platform, iceCream, env, person1, person2, lights);
+        this.add(door1, door2, box, platform1, platform2, iceCream, env, person1, person2, lights);
         this.state.person1 = person1;
         this.state.person2 = person2;
 
         // Populate GUI
-        this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+        // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
 
     addToUpdateList(object) {
@@ -114,13 +127,13 @@ class SeedScene extends Scene {
 			}
 		}
 
-		let buttons = [[new Vec3(-2.0, -2.0, -8.0), new Vec3(2.0, 10.0, -5.0)]];
-		for (const button of buttons) {
-			if (inRegion(this.person2.cubeBody.position, button)) {
-                this.platform.active = true;
+		for (let i = 0; i < this.buttons.length; i++) {
+			if (inRegion(this.person1.cubeBody.position, this.buttons[i]) || 
+                inRegion(this.person2.cubeBody.position, this.buttons[i])) {
+                this.platforms[i].active = true;
 			}
             else {
-                this.platform.active = false;
+                this.platforms[i].active = false;
             }
 		}
 

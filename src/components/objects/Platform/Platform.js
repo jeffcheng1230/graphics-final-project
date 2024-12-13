@@ -7,7 +7,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { Body, Box, Vec3, Material } from 'cannon-es';
 
 class Platform extends Group {
-	constructor(parent, world) {
+	constructor(position, buttonPos, parent, world) {
 		// Call parent Group() constructor
 		super();
 
@@ -26,8 +26,9 @@ class Platform extends Group {
 
 		const platformBody = new Body({
 			mass: 0,
-			position: new Vec3(0, 5.0, 5.28),
-			shape: new Box(new Vec3(1.5, 0.25, 1.25)),
+			// position: new Vec3(0, -17.5, 31),
+			position: position,
+			shape: new Box(new Vec3(2.5, 0.25, 2.5)),
 			angularFactor: new Vec3(0, 0, 0),
 			material: this.frictionlessMaterial,
 			gravityScale: 0
@@ -46,6 +47,16 @@ class Platform extends Group {
 		this.startPos = platformBody.position.clone();
 		this.endPos = platformBody.position.clone();
 		this.endPos.y += 4.0;
+
+		var model;
+
+		const loader = new GLTFLoader();
+		loader.load("Demo4/Demo.gltf", (gltf) => {
+			model = gltf.scene;
+			this.add(model);
+			model.scale.set(5, 5, 5);
+			model.position.copy(buttonPos);
+		});
 
 		parent.addToUpdateList(this);
 	}
