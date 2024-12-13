@@ -19,19 +19,19 @@ world.gravity.set(0, -9.82, 0);
 const frictionlessMaterial = new Material("frictionless");
 frictionlessMaterial.friction = 0;
 frictionlessMaterial.restitution = 0;
-const ground = new Body({
-  mass: 0, // mass = 0 makes it static
-  shape: new Plane(),
-  material: frictionlessMaterial
-});
-ground.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // Match the Three.js plane rotation
-world.addBody(ground);
+// const ground = new Body({
+//   mass: 0, // mass = 0 makes it static
+//   shape: new Plane(new Vector3(1, 0, 0), -50),
+//   material: frictionlessMaterial
+// });
+// ground.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // Match the Three.js plane rotation
+// world.addBody(ground);
 
 const geometry = new PlaneGeometry(5, 5); // Width, Height
 const material = new MeshBasicMaterial({ color: 0x00ff00, side: DoubleSide }); // Green color
 const plane = new Mesh(geometry, material);
-plane.position.copy(ground.position);
-plane.quaternion.copy(ground.quaternion);
+// plane.position.copy(ground.position);
+// plane.quaternion.copy(ground.quaternion);
 
 // ==========================================
 
@@ -45,8 +45,9 @@ scene.add(plane);
 // ====
 
 // Set up camera
-camera.position.set(-30, 2, 0);
-camera.lookAt(new Vector3(0, 50, 0));
+camera.position.set(-40, 2, 0);
+// camera.lookAt(new Vector3(0, 50, 0));
+camera.lookAt(new Vector3(0, 0, 50));
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);

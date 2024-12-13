@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, TextureLoader } from 'three';
-import { Flower, Land, Person1, Person2, Environment, IceCream } from 'objects';
+import { Flower, Land, Person1, Person2, Environment, IceCream, Platform } from 'objects';
 import { BasicLights } from 'lights';
 
 import IMG from '/public/friend_outside.jpg';
@@ -33,6 +33,8 @@ class SeedScene extends Scene {
         // ===========================================
 
         // Add meshes to scene
+        const platform = new Platform(this, world);
+
         const iceCream = new IceCream(this);
         iceCream.position.copy(new Vec3(0.0, 5.0, -3.0));
         this.iceCreams = [iceCream];
@@ -50,7 +52,7 @@ class SeedScene extends Scene {
         const flower = new Flower(this);
         const lights = new BasicLights();
         // this.add(person, land, flower, lights);
-        this.add(iceCream, env, person1, person2, lights);
+        this.add(platform, iceCream, env, person1, person2, lights);
         this.state.person1 = person1;
         this.state.person2 = person2;
 
@@ -87,6 +89,14 @@ class SeedScene extends Scene {
 			if (inRegion(this.person1.cubeBody.position, iceCreams[i])) {
 				console.log("remove ice cream");
                 this.remove(this.iceCreams[i]);
+			}
+		}
+
+		// Environment Interaction
+		let lavaPits = [[new Vector3(-4.0, -2.0, -0.55), new Vector3(4.0, 10.0, 0.76)]];
+		for (const pit of lavaPits) {
+			if (inRegion(this.person1.position, pit)) {
+				console.log("Dead");
 			}
 		}
     }

@@ -30,7 +30,7 @@ class Person1 extends Group {
 			this.model = model;
 
 			// Set the models initial scale, position, orientation
-			model.scale.set(3, 3, 3);
+			model.scale.set(2, 2, 2);
 			model.position.x = 0;
 			model.position.y = 0;
 			model.position.z = 0;
@@ -211,24 +211,6 @@ class Person1 extends Group {
 			}	
 		}
 
-		let inRegion = function (position, region) {
-			if (position.x >= region[0].x && position.x <= region[1].x &&
-				position.y >= region[0].y && position.y <= region[1].y &&
-				position.z >= region[0].z && position.z <= region[1].z) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-
-		// Environment Interaction
-		let lavaPits = [[new Vector3(-4.0, -2.0, -0.55), new Vector3(4.0, 10.0, 0.76)]];
-		for (const pit of lavaPits) {
-			if (inRegion(this.cubeBody.position, pit)) {
-				console.log("Dead");
-			}
-		}
 	}
 }
 
