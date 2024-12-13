@@ -5,3 +5,5 @@ export * from './Person2';
 export * from './Environment';
 export * from './IceCream';
 export * from './Platform';
+export * from './SteppingBox';
+export * from './Door';

@@ -120,7 +120,13 @@ class Person2 extends Group {
 
 		// lock person model to cube with physics
 		if (this.model != null) {
-			this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -0.4, 0.0)));
+			if (this.jump != null && this.jump.time / this.jump.getClip().duration >= 0.3 && 
+					this.jump != null && this.jump.time / this.jump.getClip().duration <= 0.6) {
+				this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -4.0, 0.0)));
+			}
+			else {
+				this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -2.5, 0.0)));
+			}
 			// this.model.quaternion.copy(this.cubeBody.quaternion);
 		}
 		// lock visual box to cube with physics

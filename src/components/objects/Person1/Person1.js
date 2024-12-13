@@ -200,6 +200,7 @@ class Person1 extends Group {
 
 			// Jump force
 			if (!this.jumping && this.jump.time / this.jump.getClip().duration >= 0.25) {
+				// jump glitch ===== 
 				this.cubeBody.applyForce(new Vec3(0.0, 50000000.0, 0.0), new Vec3(0.0, 0.0, 0.0));
 				this.jumping = true;
 			}
