@@ -21,7 +21,7 @@ frictionlessMaterial.friction = 0;
 frictionlessMaterial.restitution = 0;
 // const ground = new Body({
 //   mass: 0, // mass = 0 makes it static
-//   shape: new Plane(new Vector3(1, 0, 0), -50),
+//   shape: new Plane(),
 //   material: frictionlessMaterial
 // });
 // ground.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // Match the Three.js plane rotation
@@ -41,7 +41,7 @@ const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 
 // ====
-scene.add(plane);
+// scene.add(plane);
 // ====
 
 // Set up camera

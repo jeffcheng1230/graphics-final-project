@@ -5,6 +5,7 @@ import { BasicLights } from 'lights';
 
 import IMG from '/public/friend_outside.jpg';
 import { Vec3, World } from 'cannon-es';
+import { Vector3 } from 'three'
 
 class SeedScene extends Scene {
     constructor(world) {
@@ -33,7 +34,8 @@ class SeedScene extends Scene {
         // ===========================================
 
         // Add meshes to scene
-        const platform = new Platform(this, world);
+        const platform1 = new Platform(new Vec3(0, -17.5, 31), this, world);
+        const platform2 = new Platform(new Vec3(0, -7.5, -30.2), this, world);
 
         const iceCream = new IceCream(this);
         iceCream.position.copy(new Vec3(0.0, 5.0, -3.0));
@@ -42,7 +44,7 @@ class SeedScene extends Scene {
         const env = new Environment(this, world);
 
         const person1 = new Person1(this, world);
-        person1.cubeBody.position.copy(new Vec3(0.0, 10.0, 5.0));
+        person1.cubeBody.position.copy(new Vec3(0, -15, -32));
         this.person1 = person1;
         const person2 = new Person2(this, world);
         person2.cubeBody.position.copy(new Vec3(0.0, 10.0, -5.0));
@@ -52,12 +54,13 @@ class SeedScene extends Scene {
         const flower = new Flower(this);
         const lights = new BasicLights();
         // this.add(person, land, flower, lights);
-        this.add(platform, iceCream, env, person1, person2, lights);
+        // this.add(platform, iceCream, env, person1, person2, lights);
+        this.add(platform1, platform2, iceCream, env, person1, lights);
         this.state.person1 = person1;
         this.state.person2 = person2;
 
         // Populate GUI
-        this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+        // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
 
     addToUpdateList(object) {
@@ -95,7 +98,7 @@ class SeedScene extends Scene {
 		// Environment Interaction
 		let lavaPits = [[new Vector3(-4.0, -2.0, -0.55), new Vector3(4.0, 10.0, 0.76)]];
 		for (const pit of lavaPits) {
-			if (inRegion(this.person1.position, pit)) {
+			if (inRegion(this.person1.cubeBody.position, pit)) {
 				console.log("Dead");
 			}
 		}

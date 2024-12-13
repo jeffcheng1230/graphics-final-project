@@ -7,7 +7,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { Body, Box, Vec3, Material } from 'cannon-es';
 
 class Platform extends Group {
-	constructor(parent, world) {
+	constructor(position, parent, world) {
 		// Call parent Group() constructor
 		super();
 
@@ -18,7 +18,7 @@ class Platform extends Group {
 
 		this.name = 'ice cream';
 
-		const geometry = new BoxGeometry(3, 0.5, 2.5); // Width, Height, Depth
+		const geometry = new BoxGeometry(5, 0.5, 5); // Width, Height, Depth
 		const material = new MeshBasicMaterial({ color: 0x00ff00 }); // Green color
 		const platformBox = new Mesh(geometry, material);
 		this.add(platformBox);
@@ -26,8 +26,9 @@ class Platform extends Group {
 
 		const platformBody = new Body({
 			mass: 0,
-			position: new Vec3(0, 5.0, 5.28),
-			shape: new Box(new Vec3(1.5, 0.25, 1.25)),
+			// position: new Vec3(0, -17.5, 31),
+			position: position,
+			shape: new Box(new Vec3(2.5, 0.25, 2.5)),
 			angularFactor: new Vec3(0, 0, 0),
 			material: this.frictionlessMaterial
 			// quaternion: quaternion

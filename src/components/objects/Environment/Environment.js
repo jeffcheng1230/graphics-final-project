@@ -20,91 +20,168 @@ class Environment extends Group {
 
 		var model;
 
-		// const loader = new GLTFLoader();
-		// loader.load('/Demo2/Demo.gltf', (gltf) => {
-		// 	model = gltf.scene;
-		// 	this.add(model);
-		// 	model.scale.set(10, 10, 10);
-		// 	model.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
-		// });
+		const geometry = new BoxGeometry(80, 0.5, 5); // Width, Height, Depth
+		const material = new MeshBasicMaterial({ color: 0x999999 }); // Gray color
+		
+		const box1 = new Mesh(geometry, material);
+		this.add(box1);
+		this.box1 = box1;
 
-		// // Cannon JS physics box
-		// const cubeShape1 = new Box(new Vec3(3.52, 0.13, 2.5));	// Half-extents
-		// const cubeBody1 = new Body({
-		// 	mass: 0,
-		// 	position: new Vec3(0, 2.15, 5.28),
-		// 	shape: cubeShape1,
-		// 	angularFactor: new Vec3(0, 0, 0),
-		// 	material: this.frictionlessMaterial
-		// 	// quaternion: quaternion
-		// });
-		// cubeBody1.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
-		// world.addBody(cubeBody1);
-		// this.world = world;
-
-		// const cubeShape2 = new Box(new Vec3(3.52, 0.13, 2.5));	// Half-extents
-		// const cubeBody2 = new Body({
-		// 	mass: 0,
-		// 	position: new Vec3(0, 2.15, -5),
-		// 	shape: cubeShape1,
-		// 	angularFactor: new Vec3(0, 0, 0),
-		// 	material: this.frictionlessMaterial
-		// 	// quaternion: quaternion
-		// });
-		// cubeBody2.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
-		// world.addBody(cubeBody2);
-		// this.world = world;
-
-		// const cubeShape3 = new Box(new Vec3(0.25, 1, 2.5));	// Half-extents
-		// const cubeBody3 = new Body({
-		// 	mass: 0,
-		// 	position: new Vec3(0, 1, 2),
-		// 	shape: cubeShape1,
-		// 	angularFactor: new Vec3(0, 0, 0),
-		// 	material: this.frictionlessMaterial
-		// 	// quaternion: quaternion
-		// });
-		// cubeBody3.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
-		// world.addBody(cubeBody3);
-		// this.world = world;
-
-		// const cubeShape4 = new Box(new Vec3(0.25, 1, 2.5));	// Half-extents
-		// const cubeBody4 = new Body({
-		// 	mass: 0,
-		// 	position: new Vec3(0, 1, -1.55),
-		// 	shape: cubeShape1,
-		// 	angularFactor: new Vec3(0, 0, 0),
-		// 	material: this.frictionlessMaterial
-		// 	// quaternion: quaternion
-		// });
-		// cubeBody4.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
-		// world.addBody(cubeBody4);
-		// this.world = world;
-
-		// // Three JS visual box
-		const geometry = new BoxGeometry(0.5, 2, 5); // Width, Height, Depth
-		const material = new MeshBasicMaterial({ color: 0x00ff00 }); // Green color
-		// const material = new MeshBasicMaterial({ transparent: true, opacity: 0.2 });
-		const box = new Mesh(geometry, material);
-		this.add(box);
-		this.box = box;
-
-		const level1shape = new Box(new Vec3(3.52, 0.13, 2.5));	// Half-extents
+		const level1shape = new Box(new Vec3(40, 0.25, 2.5));
 		const level1body = new Body({
 			mass: 0,
-			position: new Vec3(0, 2.15, 5.28),
-			shape: cubeShape1,
+			position: new Vec3(0, -18, 0),
+			shape: level1shape,
 			angularFactor: new Vec3(0, 0, 0),
 			material: this.frictionlessMaterial
-			// quaternion: quaternion
 		});
 		level1body.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
 		world.addBody(level1body);
 		this.world = world;
+		this.box1.position.copy(level1body.position);
+		this.box1.quaternion.copy(level1body.quaternion);
 
-		this.box.position.copy(level1body.position);
-		this.box.quaternion.copy(level1body.quaternion);
+		const box2a = new Mesh(geometry, material);
+		this.add(box2a);
+		this.box2a = box2a;
+		const level2ashape = new Box(new Vec3(40, 0.25, 2.5));
+		const level2abody = new Body({
+			mass: 0,
+			position: new Vec3(0, -8, -12),
+			shape: level2ashape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		level2abody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(level2abody);
+		this.world = world;
+		this.box2a.position.copy(level2abody.position);
+		this.box2a.quaternion.copy(level2abody.quaternion);
+
+		const box2b = new Mesh(geometry, material);
+		this.add(box2b);
+		this.box2b = box2b;
+		const level2bshape = new Box(new Vec3(40, 0.25, 2.5));
+		const level2bbody = new Body({
+			mass: 0,
+			position: new Vec3(0, -8, 74),
+			shape: level2bshape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		level2bbody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(level2bbody);
+		this.world = world;
+		this.box2b.position.copy(level2bbody.position);
+		this.box2b.quaternion.copy(level2bbody.quaternion);
+
+		const box3 = new Mesh(geometry, material);
+		this.add(box3);
+		this.box3 = box3;
+		const level3shape = new Box(new Vec3(40, 0.25, 2.5));
+		const level3body = new Body({
+			mass: 0,
+			position: new Vec3(0, 2, 18),
+			shape: level3shape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		level3body.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(level3body);
+		this.world = world;
+		this.box3.position.copy(level3body.position);
+		this.box3.quaternion.copy(level3body.quaternion);
+
+		const box4 = new Mesh(geometry, material);
+		this.add(box4);
+		this.box4 = box4;
+		const level4shape = new Box(new Vec3(40, 0.25, 2.5));
+		const level4body = new Body({
+			mass: 0,
+			position: new Vec3(0, 12, 0),
+			shape: level4shape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		level4body.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(level4body);
+		this.world = world;
+		this.box4.position.copy(level4body.position);
+		this.box4.quaternion.copy(level4body.quaternion);
+
+		let wallGeometry = new BoxGeometry(0.5, 80, 5); // Width, Height, Depth
+		const wallMaterial = new MeshBasicMaterial({ transparent: true, opacity: 0.01 });
 		
+		const leftWall = new Mesh(wallGeometry, wallMaterial);
+		this.add(leftWall);
+		this.leftWall = leftWall;
+		const leftWallShape = new Box(new Vec3(0.25, 40, 5));
+		const leftWallBody = new Body({
+			mass: 0,
+			position: new Vec3(0, 12, -35),
+			shape: leftWallShape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		leftWallBody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(leftWallBody);
+		this.world = world;
+		this.leftWall.position.copy(leftWallBody.position);
+		this.leftWall.quaternion.copy(leftWallBody.quaternion);
+
+		const rightWall = new Mesh(wallGeometry, wallMaterial);
+		this.add(rightWall);
+		this.rightWall = leftWall;
+		const rightWallShape = new Box(new Vec3(0.25, 40, 5));
+		const rightWallBody = new Body({
+			mass: 0,
+			position: new Vec3(0, 12, 34.9),
+			shape: rightWallShape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		rightWallBody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(rightWallBody);
+		this.world = world;
+		this.rightWall.position.copy(rightWallBody.position);
+		this.rightWall.quaternion.copy(rightWallBody.quaternion);
+
+		wallGeometry = new BoxGeometry(80, 80, 0.5); // Width, Height, Depth
+
+		const backWall = new Mesh(wallGeometry, wallMaterial);
+		this.add(backWall);
+		this.backWall = backWall;
+		const backWallShape = new Box(new Vec3(40, 40, 0.5));
+		const backWallBody = new Body({
+			mass: 0,
+			position: new Vec3(3, 0, 0),
+			shape: backWallShape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		backWallBody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(backWallBody);
+		this.world = world;
+		this.backWall.position.copy(backWallBody.position);
+		this.backWall.quaternion.copy(backWallBody.quaternion);
+
+		const frontWall = new Mesh(wallGeometry, wallMaterial);
+		this.add(frontWall);
+		this.frontWall = frontWall;
+		const frontWallShape = new Box(new Vec3(40, 40, 0.5));
+		const frontWallBody = new Body({
+			mass: 0,
+			position: new Vec3(-3, 0, 0),
+			shape: frontWallShape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		frontWallBody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(frontWallBody);
+		this.world = world;
+		this.frontWall.position.copy(frontWallBody.position);
+		this.frontWall.quaternion.copy(frontWallBody.quaternion);
+
 		parent.addToUpdateList(this);
 	}
 
