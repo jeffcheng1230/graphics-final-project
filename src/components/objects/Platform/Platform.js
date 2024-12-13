@@ -7,7 +7,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { Body, Box, Vec3, Material } from 'cannon-es';
 
 class Platform extends Group {
-	constructor(position, buttonPos, parent, world) {
+	constructor(position, buttonPos1, buttonPos2, parent, world, height) {
 		// Call parent Group() constructor
 		super();
 
@@ -46,7 +46,7 @@ class Platform extends Group {
 
 		this.startPos = platformBody.position.clone();
 		this.endPos = platformBody.position.clone();
-		this.endPos.y += 4.0;
+		this.endPos.y += height;
 
 		var model;
 
@@ -55,8 +55,17 @@ class Platform extends Group {
 			model = gltf.scene;
 			this.add(model);
 			model.scale.set(5, 5, 5);
-			model.position.copy(buttonPos);
+			model.position.copy(buttonPos1);
 		});
+		if (buttonPos2 != null) {
+			console.log("non-null buttonPos2");
+			loader.load("Demo4/Demo.gltf", (gltf) => {
+				model = gltf.scene;
+				this.add(model);
+				model.scale.set(5, 5, 5);
+				model.position.copy(buttonPos2);
+			});
+		}
 
 		parent.addToUpdateList(this);
 	}
@@ -79,10 +88,10 @@ class Platform extends Group {
 							(p1.z - p2.z) * (p1.z - p2.z);
 		}
 
-		if (this.active && distSq(this.platformBody.position, this.endPos) > 0.5) {
+		if (this.active && distSq(this.platformBody.position, this.endPos) > 0.03) {
 			this.platformBody.position.y += 0.05;
 		}
-		else if (!this.active && distSq(this.platformBody.position, this.startPos) > 0.5) {
+		else if (!this.active && distSq(this.platformBody.position, this.startPos) > 0.03) {
 			this.platformBody.position.y -= 0.05;
 		}
 	}

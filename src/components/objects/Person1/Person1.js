@@ -78,7 +78,7 @@ class Person1 extends Group {
 		});
 
 		// Three JS visual box
-		const geometry = new BoxGeometry(2, 5, 2); // Width, Height, Depth
+		const geometry = new BoxGeometry(2, 4, 2); // Width, Height, Depth
 		// const material = new MeshBasicMaterial({ color: 0x00ff00 }); // Green color
 		const material = new MeshBasicMaterial({ transparent: true, opacity: 0.2 }); // Green color
 		const box = new Mesh(geometry, material);
@@ -86,7 +86,7 @@ class Person1 extends Group {
 		this.box = box;
 
 		// Cannon JS physics box
-		const cubeShape = new Box(new Vec3(1, 2.5, 1));	// Half-extents
+		const cubeShape = new Box(new Vec3(1, 2, 1));	// Half-extents
 		const cubeBody = new Body({
 			mass: 100000,
 			position: new Vec3(0, 2, 0),
@@ -128,10 +128,10 @@ class Person1 extends Group {
 		if (this.model != null) {
 			if (this.jump != null && this.jump.time / this.jump.getClip().duration >= 0.3 && 
 					this.jump != null && this.jump.time / this.jump.getClip().duration <= 0.6) {
-				this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -4.0, 0.0)));
+				this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -3.5, 0.0)));
 			}
 			else {
-				this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -2.5, 0.0)));
+				this.model.position.copy(this.cubeBody.position.clone().vadd(new Vec3(0.0, -2.0, 0.0)));
 			}
 			// this.model.quaternion.copy(this.cubeBody.quaternion);
 		}
@@ -161,7 +161,7 @@ class Person1 extends Group {
 				quaternion1.setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2);
 				this.model.quaternion.copy(quaternion1);
 
-				this.cubeBody.velocity.z = 10;
+				this.cubeBody.velocity.z = 5;
 			}
 			else if (!this.leftArrow) {
 				this.walk.stop();
@@ -179,7 +179,7 @@ class Person1 extends Group {
 				quaternion1.multiply(quaternion2);
 				this.model.quaternion.copy(quaternion1);
 
-				this.cubeBody.velocity.z = -10;
+				this.cubeBody.velocity.z = -5;
 			}
 			else if (!this.rightArrow) {
 				this.walk.stop();
@@ -201,7 +201,7 @@ class Person1 extends Group {
 			// Jump force
 			if (!this.jumping && this.jump.time / this.jump.getClip().duration >= 0.25) {
 				// jump glitch ===== 
-				this.cubeBody.applyForce(new Vec3(0.0, 50000000.0, 0.0), new Vec3(0.0, 0.0, 0.0));
+				this.cubeBody.applyForce(new Vec3(0.0, 80000000.0, 0.0), new Vec3(0.0, 0.0, 0.0));
 				this.jumping = true;
 			}
 

@@ -7,7 +7,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { Body, Box, Vec3, Material } from 'cannon-es';
 
 class IceCream extends Group {
-	constructor(parent, world) {
+	constructor(parent, position) {
 		// Call parent Group() constructor
 		super();
 
@@ -24,6 +24,7 @@ class IceCream extends Group {
 			model = gltf.scene;
 			this.add(model);
 			model.scale.set(10, 10, 10);
+			model.position.copy(position);
 		});
 
 		parent.addToUpdateList(this);

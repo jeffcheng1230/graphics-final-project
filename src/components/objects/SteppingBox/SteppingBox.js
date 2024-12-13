@@ -18,7 +18,7 @@ class SteppingBox extends Group {
 
 		this.name = 'stepping box';
 
-		const geometry = new BoxGeometry(3, 3, 3); // Width, Height, Depth
+		const geometry = new BoxGeometry(5, 5, 5); // Width, Height, Depth
 		const material = new MeshBasicMaterial({ color: 0x00ffff }); // Green color
 		const box = new Mesh(geometry, material);
 		this.add(box);
@@ -27,7 +27,7 @@ class SteppingBox extends Group {
 		const boxBody = new Body({
 			mass: 1000000,
 			position: position,
-			shape: new Box(new Vec3(1.5, 1.5, 1.5)),
+			shape: new Box(new Vec3(2.5, 2.5, 2.5)),
 			// quaternion: quaternion
 		});
 		boxBody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);

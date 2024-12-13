@@ -18,7 +18,7 @@ class Environment extends Group {
 
 		this.name = 'environment';
 
-		const geometry = new BoxGeometry(80, 0.5, 5); // Width, Height, Depth
+		let geometry = new BoxGeometry(80, 0.5, 5); // Width, Height, Depth
 		const material = new MeshBasicMaterial({ color: 0x999999 }); // Gray color
 		
 		const box1 = new Mesh(geometry, material);
@@ -39,13 +39,14 @@ class Environment extends Group {
 		this.box1.position.copy(level1body.position);
 		this.box1.quaternion.copy(level1body.quaternion);
 
+		geometry = new BoxGeometry(40, 0.5, 5); // Width, Height, Depth
 		const box2a = new Mesh(geometry, material);
 		this.add(box2a);
 		this.box2a = box2a;
-		const level2ashape = new Box(new Vec3(40, 0.25, 2.5));
+		const level2ashape = new Box(new Vec3(20, 0.25, 2.5));
 		const level2abody = new Body({
 			mass: 0,
-			position: new Vec3(0, -8, -12),
+			position: new Vec3(0, -8, -20),
 			shape: level2ashape,
 			angularFactor: new Vec3(0, 0, 0),
 			material: this.frictionlessMaterial
@@ -56,13 +57,14 @@ class Environment extends Group {
 		this.box2a.position.copy(level2abody.position);
 		this.box2a.quaternion.copy(level2abody.quaternion);
 
+		geometry = new BoxGeometry(14, 0.5, 5); // Width, Height, Depth
 		const box2b = new Mesh(geometry, material);
 		this.add(box2b);
 		this.box2b = box2b;
-		const level2bshape = new Box(new Vec3(40, 0.25, 2.5));
+		const level2bshape = new Box(new Vec3(7, 0.25, 2.5));
 		const level2bbody = new Body({
 			mass: 0,
-			position: new Vec3(0, -8, 74),
+			position: new Vec3(0, -8, 22),
 			shape: level2bshape,
 			angularFactor: new Vec3(0, 0, 0),
 			material: this.frictionlessMaterial
@@ -73,6 +75,25 @@ class Environment extends Group {
 		this.box2b.position.copy(level2bbody.position);
 		this.box2b.quaternion.copy(level2bbody.quaternion);
 
+		const box2c = new Mesh(geometry, material);
+		this.add(box2c);
+		this.box2c = box2c;
+		const level2cshape = new Box(new Vec3(7, 0.25, 2.5));
+		const level2cbody = new Body({
+			mass: 0,
+			position: new Vec3(0, -8, 40),
+			shape: level2cshape,
+			angularFactor: new Vec3(0, 0, 0),
+			material: this.frictionlessMaterial
+		});
+		level2cbody.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		world.addBody(level2cbody);
+		this.world = world;
+		this.box2c.position.copy(level2cbody.position);
+		this.box2c.quaternion.copy(level2cbody.quaternion);
+
+		geometry = new BoxGeometry(80, 0.5, 5); // Width, Height, Depth
+		
 		const box3 = new Mesh(geometry, material);
 		this.add(box3);
 		this.box3 = box3;
@@ -179,6 +200,16 @@ class Environment extends Group {
 		this.world = world;
 		this.frontWall.position.copy(frontWallBody.position);
 		this.frontWall.quaternion.copy(frontWallBody.quaternion);
+
+		var model;
+		let loader = new GLTFLoader();
+		loader.load('Demo2/Demo.gltf', (gltf) => {
+			model = gltf.scene;
+			this.add(model);
+			model.scale.set(10, 10, 10);
+			model.position.copy(new Vec3(0, -9.6, -33.5));
+			model.quaternion.setFromAxisAngle(new Vec3(0, -1, 0), Math.PI / 2);
+		});
 
 		parent.addToUpdateList(this);
 	}

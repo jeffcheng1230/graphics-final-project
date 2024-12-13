@@ -46,7 +46,6 @@ const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
 camera.position.set(-40, 2, 0);
-// camera.lookAt(new Vector3(0, 50, 0));
 camera.lookAt(new Vector3(0, 0, 50));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -142,3 +141,5 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
+
+scene.window = window;

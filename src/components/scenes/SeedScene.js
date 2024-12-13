@@ -34,38 +34,66 @@ class SeedScene extends Scene {
         // ===========================================
 
         // Add meshes to scene
-		this.doors = [[new Vec3(-0.5, 0.0, 13), new Vec3(0.5, 5.0, 17)],
-		            [new Vec3(-0.5, 0.0, -17), new Vec3(0.5, 5.0, -13)]];
+		this.doors = [[new Vec3(-2, 2.25, 28), new Vec3(2, 7.25, 34)],
+		            [new Vec3(-2, 2.25, 22), new Vec3(2, 7.25, 28)]];
         let doors1Pos = this.doors[0][0];
         doors1Pos.x += 0.5;
-        doors1Pos.z += 2;
+        doors1Pos.z += 4;
         let doors2Pos = this.doors[1][0];
         doors2Pos.x += 0.5;
-        doors2Pos.z += 2;
+        doors2Pos.z += 4;
         const door1 = new Door(this, doors1Pos);
         const door2 = new Door(this, doors2Pos);
 
-        const box = new SteppingBox(this, world, new Vec3(0.0, 5.0, -10.0));
+        const box = new SteppingBox(this, world, new Vec3(0.0, -5.0, 20.0));
 
-		this.buttons = [[new Vec3(-2.0, -2.0, -8.0), new Vec3(2.0, 10.0, -5.0)],
-                        [new Vec3(-2.0, -2.0, -13.0), new Vec3(2.0, 10.0, -10.0)]];
+		this.buttons = [[new Vec3(-2.0, -22, 17), new Vec3(2.0, -15, 20)],
+                        [new Vec3(-2.0, -12.0, -13.0), new Vec3(2.0, -5.0, -10.0)]];
+		this.buttonsDup = [[],
+                        [new Vec3(-2.0, -2.0, -13.0), new Vec3(2.0, 5.0, -10.0)]];
         this.platforms = []
-        let buttonPos = this.buttons[0][0].clone();
-        buttonPos.x += 2;
-        buttonPos.y += 5;
-        buttonPos.z += 1.5;
-        const platform1 = new Platform(new Vec3(0, -17.5, 31), buttonPos, this, world);
+        let buttonPos1 = this.buttons[0][0].clone();
+        let buttonPos2 = null;
+        buttonPos1.x += 2;
+        buttonPos1.y += 5;
+        buttonPos1.z += 1.5;
+        if (this.buttonsDup[0].length > 0) {
+            buttonPos2 = this.buttonsDup[0][0].clone();
+            buttonPos2.x += 2;
+            buttonPos2.y += 5;
+            buttonPos2.z += 1.5;
+        }
+        const platform1 = new Platform(new Vec3(0, -17.7, 31), buttonPos1, buttonPos2, this, world, 10.0);
         this.platforms.push(platform1);
-        buttonPos = this.buttons[1][0].clone();
-        buttonPos.x += 2;
-        buttonPos.y += 5;
-        buttonPos.z += 1.5;
-        const platform2 = new Platform(new Vec3(0, -6.0, -30.2), buttonPos, this, world);
+        buttonPos1 = this.buttons[1][0].clone();
+        buttonPos2 = null;
+        buttonPos1.x += 2;
+        buttonPos1.y += 5;
+        buttonPos1.z += 1.5;
+        if (this.buttonsDup[1].length > 0) {
+            buttonPos2 = this.buttonsDup[1][0].clone();
+            buttonPos2.x += 2;
+            buttonPos2.y += 5;
+            buttonPos2.z += 1.5;
+        }
+        const platform2 = new Platform(new Vec3(0, -7.5, -30.2), buttonPos1, buttonPos2, this, world, 1.5);
         this.platforms.push(platform2);
 
-        const iceCream = new IceCream(this);
-        iceCream.position.copy(new Vec3(0.0, 5.0, -3.0));
-        this.iceCreams = [iceCream];
+		let iceCreamPos = [new Vec3(0.0, -3.0, 11.0)];
+        this.iceCreams = [];
+        this.iceCreamPos = [];
+        for (const iceCream of iceCreamPos) {
+            this.iceCreams.push(new IceCream(this, iceCream));
+            let icPos1 = iceCream.clone();
+            icPos1.x -= 0.5;
+            icPos1.y -= 3;
+            icPos1.z -= 1.5;
+            let icPos2 = iceCream.clone();
+            icPos2.x += 0.5;
+            icPos2.y += 3;
+            icPos2.z += 1.5;
+            this.iceCreamPos.push([icPos1, icPos2]);
+        }
 
         const env = new Environment(this, world);
 
@@ -73,14 +101,17 @@ class SeedScene extends Scene {
         person1.cubeBody.position.copy(new Vec3(0, -15, -32));
         this.person1 = person1;
         const person2 = new Person2(this, world);
-        person2.cubeBody.position.copy(new Vec3(0.0, 10.0, -5.0));
+        person2.cubeBody.position.copy(new Vec3(0.0, -15.0, -28.0));
         this.person2 = person2;
 
         const land = new Land();
         const flower = new Flower(this);
         const lights = new BasicLights();
         // this.add(person, land, flower, lights);
-        this.add(door1, door2, box, platform1, platform2, iceCream, env, person1, person2, lights);
+        this.add(door1, door2, box, platform1, platform2, env, person1, person2, lights);
+        for (let iceCream of this.iceCreams) {
+            this.add(iceCream);
+        }
         this.state.person1 = person1;
         this.state.person2 = person2;
 
@@ -102,34 +133,44 @@ class SeedScene extends Scene {
         }
 
 		let inRegion = function (position, region) {
-			if (position.x >= region[0].x && position.x <= region[1].x &&
-				position.y >= region[0].y && position.y <= region[1].y &&
-				position.z >= region[0].z && position.z <= region[1].z) {
-				return true;
-			}
-			else {
-				return false;
-			}
+            if (region.length > 0) {
+                if (position.x >= region[0].x && position.x <= region[1].x &&
+                    position.y >= region[0].y && position.y <= region[1].y &&
+                    position.z >= region[0].z && position.z <= region[1].z) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
 		}
 
-		let iceCreams = [[new Vec3(-4.0, -2.0, -6.0), new Vec3(4.0, 10.0, -3.0)]];
-		for (let i = 0; i < iceCreams.length; i++) {
-			if (inRegion(this.person1.cubeBody.position, iceCreams[i])) {
-				console.log("remove ice cream");
+		for (let i = 0; i < this.iceCreamPos.length; i++) {
+			if (inRegion(this.person1.cubeBody.position, this.iceCreamPos[i]) ||
+                inRegion(this.person2.cubeBody.position, this.iceCreamPos[i])) {
                 this.remove(this.iceCreams[i]);
 			}
 		}
 
-		let lavaPits = [[new Vec3(-4.0, -2.0, -0.55), new Vec3(4.0, 10.0, 0.76)]];
+		let lavaPits = [[new Vec3(-2.0, -10.0, -35), new Vec3(2.0, -5, -32.5)]];
 		for (const pit of lavaPits) {
-			if (inRegion(this.person1.cubeBody.position, pit)) {
-				console.log("Dead");
+			if (inRegion(this.person1.cubeBody.position, pit) ||
+                inRegion(this.person2.cubeBody.position, pit)) {
+                this.window.alert("You have died! Press OK to Restart");
+                this.person1.cubeBody.position.copy(new Vec3(0, -15, -32));
+                this.person2.cubeBody.position.copy(new Vec3(0.0, -15.0, -28.0));
+                this.window.location.reload();
 			}
 		}
 
 		for (let i = 0; i < this.buttons.length; i++) {
 			if (inRegion(this.person1.cubeBody.position, this.buttons[i]) || 
-                inRegion(this.person2.cubeBody.position, this.buttons[i])) {
+                inRegion(this.person2.cubeBody.position, this.buttons[i]) ||
+			    inRegion(this.person1.cubeBody.position, this.buttonsDup[i]) || 
+                inRegion(this.person2.cubeBody.position, this.buttonsDup[i])) {
                 this.platforms[i].active = true;
 			}
             else {
@@ -137,11 +178,14 @@ class SeedScene extends Scene {
             }
 		}
 
-		let doors = [[new Vec3(-0.5, 0.0, 13), new Vec3(0.5, 5.0, 17)],
-		            [new Vec3(-0.5, 0.0, -17), new Vec3(0.5, 5.0, -13)]];
-        if (inRegion(this.person1.cubeBody.position, doors[0]) && 
-            inRegion(this.person2.cubeBody.position, doors[1])) {
-            console.log("win");
+        if (inRegion(this.person1.cubeBody.position, this.doors[0]) && 
+            inRegion(this.person2.cubeBody.position, this.doors[1])) {
+            if (this.window != null) {
+                this.window.alert("You have won the game! Press OK to Restart");
+                this.person1.cubeBody.position.copy(new Vec3(0, -15, -32));
+                this.person2.cubeBody.position.copy(new Vec3(0.0, -15.0, -28.0));
+                this.window.location.reload();
+            }
         }
     }
 }
