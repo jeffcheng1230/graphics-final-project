@@ -20,7 +20,7 @@ class Door extends Group {
 
 		var model;
 		const loader = new GLTFLoader();
-		loader.load('/Demo3/Demo.gltf', (gltf) => {
+		loader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/Demo3/Demo.gltf', (gltf) => {
 			model = gltf.scene;
 			this.add(model);
 			model.scale.set(40, 40, 40);

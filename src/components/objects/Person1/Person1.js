@@ -60,7 +60,7 @@ class Person1 extends Group {
 			// Custom animation from Mixamo
 			// Walking animation
 			const fbxLoader = new FBXLoader();
-			fbxLoader.load('./Walking.fbx', (animationObject) => {
+			fbxLoader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/Walking.fbx', (animationObject) => {
 				console.log(animationObject);
 				const animationClip = animationObject.animations[0]; // Assuming the animation file has one clip
 				const action = this.mixer.clipAction(animationClip);
@@ -68,7 +68,7 @@ class Person1 extends Group {
 			});
 
 			// Jumping animation
-			fbxLoader.load('./Jumping.fbx', (animationObject) => {
+			fbxLoader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/Jumping.fbx', (animationObject) => {
 				console.log(animationObject);
 				const animationClip = animationObject.animations[0]; // Assuming the animation file has one clip
 				const action = this.mixer.clipAction(animationClip);

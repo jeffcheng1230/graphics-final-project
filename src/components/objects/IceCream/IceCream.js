@@ -20,7 +20,7 @@ class IceCream extends Group {
 
 		var model;
 		const loader = new GLTFLoader();
-		loader.load('/Demo/Demo.gltf', (gltf) => {
+		loader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/Demo/Demo.gltf', (gltf) => {
 			model = gltf.scene;
 			this.add(model);
 			model.scale.set(10, 10, 10);

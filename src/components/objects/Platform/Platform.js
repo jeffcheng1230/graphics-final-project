@@ -51,15 +51,14 @@ class Platform extends Group {
 		var model;
 
 		const loader = new GLTFLoader();
-		loader.load("Demo4/Demo.gltf", (gltf) => {
+		loader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/Demo4/Demo.gltf', (gltf) => {
 			model = gltf.scene;
 			this.add(model);
 			model.scale.set(5, 5, 5);
 			model.position.copy(buttonPos1);
 		});
 		if (buttonPos2 != null) {
-			console.log("non-null buttonPos2");
-			loader.load("Demo4/Demo.gltf", (gltf) => {
+			loader.load("https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/Demo4/Demo.gltf", (gltf) => {
 				model = gltf.scene;
 				this.add(model);
 				model.scale.set(5, 5, 5);

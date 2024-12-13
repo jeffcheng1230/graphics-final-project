@@ -58,14 +58,14 @@ class Person2 extends Group {
 			// Custom animation from Mixamo
 			// Walking animation
 			const fbxLoader = new FBXLoader();
-			fbxLoader.load('./Walking.fbx', (animationObject) => {
+			fbxLoader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/Walking.fbx', (animationObject) => {
 				const animationClip = animationObject.animations[0]; // Assuming the animation file has one clip
 				const action = this.mixer.clipAction(animationClip);
 				this.walk = action;
 			});
 
 			// Jumping animation
-			fbxLoader.load('./Jumping.fbx', (animationObject) => {
+			fbxLoader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/Jumping.fbx', (animationObject) => {
 				const animationClip = animationObject.animations[0]; // Assuming the animation file has one clip
 				const action = this.mixer.clipAction(animationClip);
 				this.jump = action;
