@@ -80,7 +80,7 @@ class Person1 extends Group {
 		// Three JS visual box
 		const geometry = new BoxGeometry(2, 4, 2); // Width, Height, Depth
 		// const material = new MeshBasicMaterial({ color: 0x00ff00 }); // Green color
-		const material = new MeshBasicMaterial({ transparent: true, opacity: 0.2 }); // Green color
+		const material = new MeshBasicMaterial({ transparent: true, opacity: 0.0 }); // Green color
 		const box = new Mesh(geometry, material);
 		this.add(box);
 		this.box = box;

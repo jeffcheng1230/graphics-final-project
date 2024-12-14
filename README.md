@@ -2,6 +2,7 @@
 Jeff-Boy and Pearl-Girl is a cooperative puzzle-platform game inspired by the popular 2D game Fireboy and Watergirl. Built using Three.js, the game challenges players to navigate two characters through maps, collaborating to operate button mechanisms, collect ice creams, and reach their respective doors. By incorporating elements like character-specific controls and strategic gameplay, the project emphasizes coordination, teamwork, and problem-solving.
 
 Our game can be found [here](https://jeffcheng1230.github.io/graphics-final-project/)
+Our write-up can be found [here](https://github.com/jeffcheng1230/graphics-final-project/blob/main/Final_Project_Writeup.pdf)
 
 # COS 426 Final Project Template
 This skeleton project will help you get started with a ThreeJS project and provide a strong foundation for extension. It sets up a simple scene, camera, and renderer in a modern JavaScript environment, and is written using some common best-practices that you may want to draw from.
