@@ -1,5 +1,5 @@
 import { Group, TextureLoader, MeshPhongMaterial, AnimationMixer, AnimationClip,
-	Quaternion, Clock, BoxGeometry, MeshBasicMaterial, Mesh, Vector3
+	Quaternion, Clock, BoxGeometry, MeshBasicMaterial, Mesh, Vector3, RepeatWrapping
  } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
@@ -19,7 +19,12 @@ class Environment extends Group {
 		this.name = 'environment';
 
 		let geometry = new BoxGeometry(80, 0.5, 5); // Width, Height, Depth
-		const material = new MeshBasicMaterial({ color: 0x999999 }); // Gray color
+		const textureLoader = new TextureLoader();
+		const texture = textureLoader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/stone.jpg'); // Replace with your JPG file path
+		texture.wrapS = RepeatWrapping; // Horizontal wrapping
+		texture.wrapT = RepeatWrapping;
+		texture.repeat.set(20, 2); // Repeat 2 times horizontally and vertically
+		const material = new MeshBasicMaterial({ color: 0x999999, map: texture }); // Gray color
 		
 		const box1 = new Mesh(geometry, material);
 		this.add(box1);

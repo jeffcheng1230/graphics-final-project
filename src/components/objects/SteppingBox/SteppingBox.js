@@ -19,7 +19,9 @@ class SteppingBox extends Group {
 		this.name = 'stepping box';
 
 		const geometry = new BoxGeometry(5, 5, 5); // Width, Height, Depth
-		const material = new MeshBasicMaterial({ color: 0x00ffff }); // Green color
+		const textureLoader = new TextureLoader();
+		const texture = textureLoader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/stone.jpg'); // Replace with your JPG file path
+		const material = new MeshBasicMaterial({ color: 0x009900, map: texture });
 		const box = new Mesh(geometry, material);
 		this.add(box);
 		this.box = box;

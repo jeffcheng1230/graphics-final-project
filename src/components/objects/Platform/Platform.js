@@ -19,7 +19,9 @@ class Platform extends Group {
 		this.name = 'platform';
 
 		const geometry = new BoxGeometry(3, 0.5, 2.5); // Width, Height, Depth
-		const material = new MeshBasicMaterial({ color: 0xffff00 }); // Green color
+		const textureLoader = new TextureLoader();
+		const texture = textureLoader.load('https://raw.githubusercontent.com/jeffcheng1230/graphics-final-project/main/public/stone.jpg'); // Replace with your JPG file path
+		const material = new MeshBasicMaterial({ color: 0x990000, map: texture });
 		const platformBox = new Mesh(geometry, material);
 		this.add(platformBox);
 		this.platformBox = platformBox;
