@@ -24,12 +24,7 @@ class SeedScene extends Scene {
         // ===========================================
 
         const loader = new TextureLoader();
-        loader.load(IMG, (texture) => {
-            this.background = texture; // Set the texture as the background
-        }, undefined, (error) => {
-            console.error('Error loading texture:', error);
-            this.background = new Color(0x7ec0ee);
-        });
+        this.background = new Color(0x7ec0ee);
 
         // ===========================================
 
